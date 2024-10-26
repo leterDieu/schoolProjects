@@ -1,8 +1,7 @@
 # A list of my projects and just (home)works for 10th/11th grades in CS class
 ## Moscow state school №57 / programming-linguistics degree
-На русском / read in Russian: [```README_ru.md```](github.com/leterDieu/schoolProjects/README_ru.md).
+На русском / read in Russian: [```README_ru.md```](https://github.com/leterDieu/schoolProjects/blob/main/README_ru.md).
 The main programming language of out course is python.
-------------
 ### File organisation ans sctructure
 There's currently a directory for only one (10th) grade, in which there's a direcotry for only one (1st) quarter of this grade. But regardless of grade and quarter the organisation of files remains the same.
 For each quarter there's probably ```notebooks```, ```progs```, and ```projects``` directories, as well as a .md file with an explanation of a main topic of that quarter.
