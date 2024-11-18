@@ -105,7 +105,7 @@ class Node[T]:
         return self
 
     def is_right(self) -> bool | None:
-        if self.parent is not None
+        if self.parent is not None:
             return self.predicate(self.value, self.parent.value) == Compare.Greater
         return None
 
@@ -115,28 +115,60 @@ class Node[T]:
             return not is_right_return
         return None
 
+    def clean(self) -> None:
+        self.parent = None
+        self.left = None
+        self.right = None
+
     def delete(self, delete_item: Node[T]) -> None:
         if self.search(delete_item) is None:
             return None
-        right_part, left_part, parent_part = delete_item.right, delete_item.left, delete_item.parent
+
+        if delete_item.parent is None:
+            if delete_item.left is not None:
+                delete_item.left.parent = None
+                prev_most_right = delete_item.left.most_right()
+                prev_most_right.right = delete_item.right
+                if prev_most_right.right is not None:
+                    prev_most_right.right.parent = prev_most_right
+                return None
+            if delete_item.right is not None:
+                delete_item.right.parent = None
+            delete_item.clean()
+            return None
+
         if delete_item.is_left():
-            parent_part.left = left_part
-            if left_part is not None:
-                right_part.parent = parent_part.left.most_right()
-                parent_part.left.most_right().right = right_part
-                left_part.parent = parent_part
-            else:
-                right_part.parent = parent_part
-                parent_part.left = right_part
-        else:
-            parent_part.right = left_part
-            if left_part is not None:
-                right_part.parent = parent_part.most_right()
-                parent_part.most_right().right = right_part
-                left_part.parent = parent_part
-            else:
-                right_part.parent = parent_part
-                parent_part.right = right_part
+            if delete_item.left is not None:
+                delete_item.parent.left = delete_item.left
+                delete_item.left.parent = delete_item.parent
+                prev_most_right = delete_item.left.most_right()
+                prev_most_right.right = delete_item.right
+                if prev_most_right.right is not None:
+                    prev_most_right.right.parent = prev_most_right
+                return None
+            if delete_item.right is not None:
+                delete_item.parent.left = delete_item.right
+                delete_item.right.parent = delete_item.parent
+                return None
+            delete_item.parent.left = None
+            delete_item.clean()
+            return None
+
+        if delete_item.left is not None:
+            delete_item.parent.right = delete_item.left
+            delete_item.left.parent = delete_item.parent
+            prev_most_right = delete_item.left.most_right()
+            prev_most_right.right = delete_item.right
+            if prev_most_right.right is not None:
+                prev_most_right.right.parent = prev_most_right
+            return None
+        if delete_item.right is not None:
+            delete_item.parent.right = delete_item.right
+            delete_item.right.parent = delete_item.parent
+            return None
+        delete_item.parent.right = None
+        delete_item.clean()
+        return None
 
     def deepness(self, level=0):
         if self.parent is None:
@@ -167,56 +199,33 @@ class Node[T]:
     def x(self) -> None:
         pass
 
-def func(x: int, y: int) -> Compare:
+
+def func(x: float, y: float) -> Compare:
     if x < y:
         return Compare.Less
     if x == y:
         return Compare.Equal
     return Compare.Greater
+    return Compare.Greater
 
 
-# a = Node(20, func)
-# b = Node(30)
-# c = Node(15)
-# d = Node(19)
-# e = Node(13)
-# f = Node(14)
-# g = Node(12)
-# h = Node(10)
-# i = Node(13.5)
-# j = Node(12.5)
-# k = Node(14.5)
-# l = Node(12.7)
-# m = Node(12.3)
-# x = Node(31)
-# y = Node(32)
-# z = Node(33)
-# p = Node(1)
-
-# a.add(b)
-# a.add(c)
-# a.add(d)
-# a.add(e)
-# a.add(f)
-# a.add(g)
-# a.add(h)
-# a.add(i)
-# a.add(j)
-# a.add(k)
-# a.add(l)
-# a.add(m)
-# a.add(x)
-# a.add(y)
-# a.add(z)
-
-a = Node(10, func)
-b = Node(20)
+a = Node(20, func)
+b = Node(30)
 c = Node(15)
-d = Node(14)
-e = Node(16)
-f = Node(25)
-g = Node(24)
-h = Node(26)
+d = Node(19)
+e = Node(13)
+f = Node(14)
+g = Node(12)
+h = Node(10)
+i = Node(13.5)
+j = Node(12.5)
+k = Node(14.5)
+l = Node(12.7)
+m = Node(12.3)
+x = Node(31)
+y = Node(32)
+z = Node(33)
+p = Node(1)
 
 a.add(b)
 a.add(c)
@@ -225,7 +234,15 @@ a.add(e)
 a.add(f)
 a.add(g)
 a.add(h)
+a.add(i)
+a.add(j)
+a.add(k)
+a.add(l)
+a.add(m)
+a.add(x)
+a.add(y)
+a.add(z)
 
 print(a)
-a.delete(d)
+a.delete(j)
 print(a)
