@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable
+from typing import Callable, List
 from enum import Enum, auto
 
 
@@ -170,6 +170,22 @@ class Node[T]:
         delete_item.clean()
         return None
 
+    def to_list(self) -> List[T]:
+        lst = []
+        if self.left is not None:
+            lst = self.left.to_list()
+        lst.append(self.value)
+
+        if self.right is not None:
+            lst.extend(self.right.to_list())
+
+        return lst
+
+    def merge(self, other: Node[T]) -> None:
+        for el in other.to_list():
+            self.add(Node(el))
+        return None
+
     def deepness(self, level=0):
         if self.parent is None:
             return level
@@ -195,54 +211,3 @@ class Node[T]:
     def __str__(self) -> str:
         self.visualization()
         return ''
-
-    def x(self) -> None:
-        pass
-
-
-def func(x: float, y: float) -> Compare:
-    if x < y:
-        return Compare.Less
-    if x == y:
-        return Compare.Equal
-    return Compare.Greater
-    return Compare.Greater
-
-
-a = Node(20, func)
-b = Node(30)
-c = Node(15)
-d = Node(19)
-e = Node(13)
-f = Node(14)
-g = Node(12)
-h = Node(10)
-i = Node(13.5)
-j = Node(12.5)
-k = Node(14.5)
-l = Node(12.7)
-m = Node(12.3)
-x = Node(31)
-y = Node(32)
-z = Node(33)
-p = Node(1)
-
-a.add(b)
-a.add(c)
-a.add(d)
-a.add(e)
-a.add(f)
-a.add(g)
-a.add(h)
-a.add(i)
-a.add(j)
-a.add(k)
-a.add(l)
-a.add(m)
-a.add(x)
-a.add(y)
-a.add(z)
-
-print(a)
-a.delete(j)
-print(a)
