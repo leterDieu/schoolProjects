@@ -1,6 +1,7 @@
 from __future__ import annotations
 from collections.abc import Iterable
 
+
 class Set[T]:
     collection: Iterable[T]
 

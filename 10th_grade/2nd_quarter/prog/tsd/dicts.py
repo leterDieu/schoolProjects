@@ -2,6 +2,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from sets import Set
 
+
 class Dict[T]:
     collection: Iterable[T]
 
