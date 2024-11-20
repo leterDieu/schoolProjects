@@ -131,10 +131,11 @@ class Node[T]:
                 prev_most_right.right = delete_item.right
                 if prev_most_right.right is not None:
                     prev_most_right.right.parent = prev_most_right
+                # delete_item.clean()
                 return None
             if delete_item.right is not None:
                 delete_item.right.parent = None
-            delete_item.clean()
+            # delete_item.clean()
             return None
 
         if delete_item.is_left():
@@ -151,7 +152,7 @@ class Node[T]:
                 delete_item.right.parent = delete_item.parent
                 return None
             delete_item.parent.left = None
-            delete_item.clean()
+            # delete_item.clean()
             return None
 
         if delete_item.left is not None:
@@ -167,7 +168,7 @@ class Node[T]:
             delete_item.right.parent = delete_item.parent
             return None
         delete_item.parent.right = None
-        delete_item.clean()
+        # delete_item.clean()
         return None
 
     def to_list(self) -> List[T]:
@@ -208,6 +209,79 @@ class Node[T]:
             self.right.visualization(True, step_back + 1)
 
     # works correctly only for the root
+    def __str__(self) -> str:
+        self.visualization()
+        return ''
+
+
+class Tree[T]:
+    root: Node[T] | None
+
+    def __init__(self, any_node: Node[T]) -> None:
+        self.root = any_node.get_root()
+        return None
+
+    def correct(self) -> bool:
+        if self.root is not None:
+            return self.root.correct()
+        return True
+
+    def search(self, search_item: Node[T]) -> Node[T] | None:
+        if self.root is not None:
+            return self.root.search(search_item)
+        return None
+
+    def get_root(self) -> Node[T] | None:
+        return self.root
+
+    def add(self, add_item: Node[T]) -> None:
+        if self.root is not None:
+            self.root.add(add_item)
+            return None
+        self.root = add_item
+        return None
+
+    def delete(self, delete_item: Node[T]) -> None:
+        if self.root is None:
+            return None
+
+        if self.root.search(delete_item) is None:
+            return None
+
+        if delete_item == self.root and self.root.left is None and self.root.right is None:
+            self.root = None
+            return None
+
+        self.root.delete(delete_item)
+
+        if delete_item.left is not None:
+            change = delete_item.left.get_root()
+        elif delete_item.right is not None:
+            chage = delete_item.right.get_root()
+        else:
+            change = delete_item.parent.get_root()
+
+        delete_item.clean()
+
+        self.root = change
+        return None
+
+    def to_list(self) -> List[T]:
+        if self.root is not None:
+            return self.root.to_list()
+        return []
+
+    def merge(self, other: Node[T]) -> None:
+        if self.root is not None:
+            self.root.merge(other)
+            return None
+        self.root = other.get_root()
+
+    def visualization(self, new_line: bool = False, step_back=0) -> None:
+        if self.root is not None:
+            self.root.visualization()
+        return None
+
     def __str__(self) -> str:
         self.visualization()
         return ''
