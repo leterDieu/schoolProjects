@@ -213,6 +213,10 @@ class Node[T]:
         self.visualization()
         return ''
 
+    def __repr__(self) -> str:
+        self.visualization()
+        return ''
+
 
 class Tree[T]:
     root: Node[T] | None
@@ -254,16 +258,21 @@ class Tree[T]:
 
         self.root.delete(delete_item)
 
-        if delete_item.left is not None:
-            change = delete_item.left.get_root()
-        elif delete_item.right is not None:
-            chage = delete_item.right.get_root()
-        else:
-            change = delete_item.parent.get_root()
+        furth = False
+        if delete_item == self.root:
+            change = None
+            if delete_item.left is not None:
+                change = delete_item.left.get_root()
+            elif delete_item.right is not None:
+                change = delete_item.right.get_root()
+            elif delete_item.parent is not None:
+                change = delete_item.parent.get_root()
+            furth = True
 
         delete_item.clean()
 
-        self.root = change
+        if furth:
+            self.root = change
         return None
 
     def to_list(self) -> List[T]:
@@ -283,5 +292,9 @@ class Tree[T]:
         return None
 
     def __str__(self) -> str:
+        self.visualization()
+        return ''
+
+    def __repr__(self) -> str:
         self.visualization()
         return ''
