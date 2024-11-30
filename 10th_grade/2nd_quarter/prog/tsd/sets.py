@@ -20,12 +20,10 @@ class Set[T]:
             first_item, *rest_of_items = iter
             start_node = Node(first_item, Set._compare_)
             for i in rest_of_items:
-                start_node.add(Node(i))
+                start_node.add(i)
             self.tree = Tree(start_node)
         except ValueError:
-            t_node = Node(0, Set._compare_)
-            self.tree = Tree(t_node)
-            self.tree.delete(t_node)
+            self.tree = Tree()
         return None
 
     def __str__(self) -> str:
@@ -35,19 +33,17 @@ class Set[T]:
         return str(self.tree.to_list())
 
     def add(self, value: T) -> None:
-        self.tree.add(Node(value))
+        self.tree.add(value)
         return None
 
     def delete(self, value: T) -> None:
-        delete_item = self.tree.search(Node(value))
-        if delete_item is not None:
-            self.tree.delete(delete_item)
+        self.tree.delete(value)
         return None
 
     def __and__(self, other: Set[T]) -> Set[T]:
         lst = []
         for i in self.tree.to_list():
-            if other.tree.search(Node(i)) is not None:
+            if other.tree.search(i) is not None:
                 lst.append(i)
         return Set(lst)
 

@@ -21,12 +21,10 @@ class Dict[K, V]:
             first_item, *rest_of_items = iter
             start_node = Node(first_item, Dict._compare_)
             for i in rest_of_items:
-                start_node.add(Node(i))
+                start_node.add(i)
             self.tree = Tree(start_node)
         except ValueError:
-            t_node = Node((0, 0), Dict._compare_)
-            self.tree = Tree(t_node)
-            self.tree.delete(t_node)
+            self.tree = Tree()
         return None
 
     def __str__(self) -> str:
@@ -49,5 +47,4 @@ class Dict[K, V]:
         return None
 
     def __delitem__(self, code) -> None:
-        t_node = self.tree.search(Node((code, self[code]), Dict._compare_))
-        self.tree.delete(t_node)
+        self.tree.delete((code, self[code]))
