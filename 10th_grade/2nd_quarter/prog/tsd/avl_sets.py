@@ -1,9 +1,9 @@
 from __future__ import annotations
 from collections.abc import Iterable
-from trees import Node, Tree, Compare
+from avl_trees import AVLTree, Compare
 
-class Set[T]:
-    tree: Tree[T]
+class AVLSet[T]:
+    tree: AVLTree[T]
 
     @staticmethod
     def _compare_(item_1: T, item_2: T) -> Compare:
@@ -15,14 +15,14 @@ class Set[T]:
 
     def __init__(self, collection: Iterable[T]) -> None:
         iter = collection.__iter__()
+        self.tree = AVLTree()
         try:
             first_item, *rest_of_items = iter
-            start_node = Node(first_item, Set._compare_)
+            self.tree.add(first_item)
             for i in rest_of_items:
-                start_node.add(i)
-            self.tree = Tree(start_node)
+                self.tree.add(i)
         except ValueError:
-            self.tree = Tree()
+            pass
         return None
 
     def __str__(self) -> str:
@@ -39,23 +39,23 @@ class Set[T]:
         self.tree.delete(value)
         return None
 
-    def __and__(self, other: Set[T]) -> Set[T]:
+    def __and__(self, other: AVLSet[T]) -> AVLSet[T]:
         lst = []
         for i in self.tree.to_list():
             if other.tree.search(i) is not None:
                 lst.append(i)
-        return Set(lst)
+        return AVLSet(lst)
 
-    def __or__(self, other: Set[T]) -> Set[T]:
+    def __or__(self, other: AVLSet[T]) -> AVLSet[T]:
         lst = []
         for i in self.tree.to_list():
             lst.append(i)
         for i in other.tree.to_list():
             lst.append(i)
 
-        return Set(lst)
+        return AVLSet(lst)
 
-    def is_subset(self, other: Set[T]) -> bool:
+    def is_subset(self, other: AVLSet[T]) -> bool:
         other_lst = other.tree.to_list()
         for i in self.tree.to_list():
             if i not in other_lst:

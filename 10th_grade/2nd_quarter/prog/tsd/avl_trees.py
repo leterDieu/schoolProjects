@@ -84,8 +84,6 @@ class AVLNode[T](Node[T]):
     def left_rotation(self) -> None:
         if self.right is None:
             return None
-        # if self.right.right is None:
-        #     return None
 
         self.right.parent = self.parent
 
@@ -106,8 +104,6 @@ class AVLNode[T](Node[T]):
     def right_rotation(self) -> None:
         if self.left is None:
             return None
-        # if self.left.left is None:
-        #     return None
 
         self.left.parent = self.parent
 
@@ -342,11 +338,14 @@ class AVLNode[T](Node[T]):
             self.add(el)
         return None
 
+    def __eq__(self, other) -> bool:
+        return self.value == other.value
+
 
 class AVLTree[T]:
     root: AVLNode[T] | None
 
-    def __init__(self, any_node: AVLNode[T] | None = None) -> None
+    def __init__(self, any_node: AVLNode[T] | None = None) -> None:
         if any_node is not None:
             self.root = any_node.get_root()
             return None
@@ -382,27 +381,64 @@ class AVLTree[T]:
         if delete_item is None:
             return None
 
-        if value == self.root.value and self.root.left is None and self.root.right is None:
-            self.root = None
+        if value == self.root.value:
+            if self.root.left is None and self.root.right is None:
+                self.root = None
+                return None
+            if self.root.left is None:
+                self.root = self.root.right
+                self.root.parent = None
+                self.root.set_right_height_all()
+            elif self.root.right is None:
+                self.root = self.root.left
+                self.root.parent = None
+                self.root.set_right_height_all()
+            else:
+                prev_right = self.root.right
+                self.root = self.root.left
+                self.root.parent = None
+                most_right = self.root.most_right()
+                most_right.right = prev_right
+                prev_right.parent = most_right
+                self.root.set_right_height_all()
+                self.root.balance_cascade()
+                self.root = self.root.get_root()
+            delete_item.clean()
             return None
 
         self.root.delete(value)
 
-        furth = False
-        if delete_item == self.root:
-            change = None
-            if delete_item.left is not None:
-                change = delete_item.left.get_root()
-            elif delete_item.right is not None:
-                change = delete_item.right.get_root()
-            elif delete_item.parent is not None:
-                change = delete_item.parent.get_root()
-            furth = True
-
         delete_item.clean()
 
-        if furth:
-            self.root = change
-        self.root = self.root.get_root()
-
         return None
+
+    def __str__(self) -> str:
+        self.root.visualization()
+        return ''
+
+    def __repr__(self) -> str:
+        self.root.visualization()
+        return ''
+
+    def merge(self, other: AVLTree) -> None:
+        if other.root is None:
+            return None
+        if self.root is None:
+            lst = other.root.to_list()
+            for i in lst:
+                self.add(i)
+            return None
+        self.root.merge(other.root)
+        return None
+
+    def to_list(self) -> list[T]:
+        if self.root is None:
+            return []
+        return self.root.to_list()
+
+    def __eq__(self, other) -> bool:
+        if self.root is None:
+            return other.root is None
+        if other.root is None:
+            return False
+        return self.root.to_list() == other.root.to_list()
