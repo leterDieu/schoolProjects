@@ -1,1 +1,1 @@
-tsd stands for trees, sets, dicts, which are the classes realized in this directory
+tsd stands for trees, sets, dicts, which are the classes realized in this directory (bst + avl), as well as trie.

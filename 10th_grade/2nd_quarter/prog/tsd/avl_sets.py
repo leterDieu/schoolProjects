@@ -1,6 +1,8 @@
 from __future__ import annotations
 from collections.abc import Iterable
 from avl_trees import AVLTree, Compare
+from typing import List
+
 
 class AVLSet[T]:
     tree: AVLTree[T]
@@ -64,3 +66,6 @@ class AVLSet[T]:
 
     def is_empty(self) -> bool:
         return not len(self.tree.to_list())
+
+    def to_list(self) -> List[T]:
+        return self.tree.to_list()

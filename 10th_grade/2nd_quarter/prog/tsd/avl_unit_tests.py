@@ -9,6 +9,7 @@ def add_values(tree: AVLTree, values: List[int]) -> None:
         tree.add(value)
     return None
 
+
 def delete_valeus(tree: AVLTree, values: List[int]) -> None:
     for value in values:
         tree.delete(value)

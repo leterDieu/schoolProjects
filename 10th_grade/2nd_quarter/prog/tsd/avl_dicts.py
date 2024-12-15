@@ -1,6 +1,7 @@
 from __future__ import annotations
 from collections.abc import Iterable
 from avl_trees import AVLTree, Compare
+from typing import List
 
 
 class AVLDict[K, V]:
@@ -49,3 +50,15 @@ class AVLDict[K, V]:
         if code not in self:
             return None
         self.tree.delete((code, self[code]))
+
+    def __setitem__(self, code, value) -> None:
+        if code in self:
+            return None
+
+        self.tree.add((code, value))
+
+    def keys(self) -> List[K]:
+        return [el[0] for el in self.tree.to_list()]
+
+    def length(self) -> int:
+        return len(self.tree.to_list())

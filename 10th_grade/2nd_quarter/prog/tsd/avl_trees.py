@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-from enum import nonmember
-from types import MethodType
-from typing import Callable, Tuple
-
 from trees import Node, Compare
 
 
