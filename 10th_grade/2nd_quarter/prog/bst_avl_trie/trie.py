@@ -1,5 +1,6 @@
 from __future__ import annotations
 from avl_dicts import AVLDict
+from avl_sets import AVLSet
 from typing import List
 
 
@@ -159,6 +160,21 @@ class TrieNode:
                 return char[0]
         return None
 
+    def to_list(self, prefix: str = '') -> List[str]:
+        lst = []
+        keys = self._keys_()
+
+        if not len(keys):
+            return None
+
+        for key in keys:
+            if self[key]:
+                if '\0' in self[key]._keys_():
+                    lst.append(prefix + key)
+                lst.extend(self[key].to_list(prefix + key))
+
+        return lst
+
 
 class Trie:
     root: TrieNode | None
@@ -191,3 +207,11 @@ class Trie:
 
     def __repr__(self) -> str:
         return str(self.root)
+
+    def to_list(self) -> List[str]:
+        if self.root is None:
+            return []
+        lst = self.root.to_list()
+        if lst is None:
+            return []
+        return lst
