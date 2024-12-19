@@ -1,6 +1,4 @@
 from __future__ import annotations
-import sys
-sys.path.append("..")
 from avl_dicts import AVLDict
 from typing import List
 

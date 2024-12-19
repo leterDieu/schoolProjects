@@ -69,3 +69,6 @@ class AVLSet[T]:
 
     def to_list(self) -> List[T]:
         return self.tree.to_list()
+
+    def __contains__(self, value: T) -> bool:
+        return bool(self.tree.search(value))
