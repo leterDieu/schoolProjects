@@ -1,4 +1,4 @@
 SELECT
-    count(*)
+    COUNT(*)
 FROM
-    sqlite_master
+    sqlite_master;

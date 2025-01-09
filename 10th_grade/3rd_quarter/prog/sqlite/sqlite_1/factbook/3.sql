@@ -6,4 +6,4 @@ FROM
 ORDER BY
     c.population DESC
 LIMIT
-    20
+    20;
