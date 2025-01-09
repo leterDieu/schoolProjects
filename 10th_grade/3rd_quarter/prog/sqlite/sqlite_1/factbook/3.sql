@@ -1,9 +1,9 @@
 SELECT
-    c.name,
-    c.population
+    name,
+    population
 FROM
-    cities as c
+    cities
 ORDER BY
-    c.population DESC
+    population DESC
 LIMIT
     20;

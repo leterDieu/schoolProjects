@@ -1,8 +1,8 @@
 SELECT
-    f.name,
-    f.area
+    name,
+    area
 FROM
-    facts as f
+    facts
 ORDER BY
     id DESC
 LIMIT

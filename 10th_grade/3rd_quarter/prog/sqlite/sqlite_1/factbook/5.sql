@@ -1,9 +1,12 @@
 SELECT
-    c.population / (
-        SELECT
-            SUM(c.population)
-        from
-            cities as c
-    ) as Population_percantage
+    ROUND(
+        100 * population / (
+            SELECT
+                SUM(population)
+            FROM
+                cities
+        ),
+        10
+    ) AS Population_percantage
 FROM
-    cities as c;
+    cities;

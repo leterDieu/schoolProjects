@@ -1,23 +1,15 @@
 SELECT
-    c.name,
-    c.population
+    name,
+    population
 FROM
-    cities as c
+    cities
 LIMIT
     10;
 
 SELECT
-    f.name,
-    f.area
+    name,
+    area
 FROM
-    facts as f
-LIMIT
-    10;
-
-SELECT
-    s.name,
-    s.seq
-FROM
-    sqlite_sequence as s
+    facts
 LIMIT
     10;

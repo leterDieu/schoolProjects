@@ -1,8 +1,8 @@
 SELECT
     *
 FROM
-    facts as f
+    facts
 ORDER BY
-    f.population DESC
+    population DESC
 LIMIT
     10;
