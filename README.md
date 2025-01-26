@@ -5,7 +5,7 @@ The main programming language of our course is python (it's often presented in J
 Our degree can be splited up into two parts: programming itself and linguistics. While programming covers theoretical stuff (like algorithms, data sctructures, etc.) and usually stored in ```prog```, linguistics is usually about application (working with texts, models) and stored in ```notebooks```. Tho, these parts often intersect.
 ### File organisation and sctructure
 There's currently a directory for only one (10th) grade, in which there's a direcotries for two quarters of this grade. But regardless of grade and quarter the organisation of files remains the same.
-For each quarter there's probably ```notebooks```, ```progs```, and ```projects``` directories, as well as a .md file with an explanation of a main topic of that quarter.
+For each quarter there's probably ```notebooks```, ```prog```, and ```projects``` directories, as well as a .md file with an explanation of a main topic of that quarter.
 #### Notebooks
 These are Jupyter notebooks (IPython). They are separeted to different directories by topics, but these topics often intersect with each other, so it's important to look through each notebook in a quarter.
 There's no .md files in this directory, because each notebook contains its tasks.
