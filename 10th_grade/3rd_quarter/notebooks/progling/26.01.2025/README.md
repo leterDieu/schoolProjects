@@ -1,1 +1,1 @@
-refer to [this abstract](https://github.com/anastasie57/compling_57/blob/main/compling/22.01.2025_lm_intro.ipynb) and [this tasks](https://github.com/anastasie57/compling_57/blob/main/compling/23.01.2025.md)
+refer to [this abstract](https://github.com/anastasie57/compling_57/blob/main/compling/22.01.2025_lm_intro.ipynb) and [these tasks](https://github.com/anastasie57/compling_57/blob/main/compling/23.01.2025.md)
