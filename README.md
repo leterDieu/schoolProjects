@@ -16,4 +16,4 @@ There are a bunch of projects, each of which contain a .md with an explanation.
 ### Shout outs
 - [LumbaBalumba](https://github.com/LumbaBalumba) and his [school57_prog repo](https://github.com/LumbaBalumba/school57_prog/).
 - [anastasie57](https://github.com/anastasie57) and her [compling_57 repo](https://github.com/anastasie57/compling_57/)
-- [KatiaKozlova](https://github.com/KatiaKozlova) and her [files repo](https://github.com/KatiaKozlova/files/) note: look in [57-10 directory](https://github.com/KatiaKozlova/files/tree/main/57-10)
+- [KatiaKozlova](https://github.com/KatiaKozlova) and her [files repo](https://github.com/KatiaKozlova/files/). Note: look in [57-10 directory](https://github.com/KatiaKozlova/files/tree/main/57-10)
