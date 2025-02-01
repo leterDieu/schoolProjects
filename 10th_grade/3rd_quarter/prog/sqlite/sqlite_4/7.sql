@@ -1,10 +1,13 @@
+-- note: another (more logical in my opinion, bt not expected) solution is commented out
+-- if u'r goin to use that one, comment out 11th and 27th lines
 WITH
     genre_count_CTE (actor, genre_count) AS (
         SELECT
             p.name AS actor,
-            1 + LENGTH (GROUP_CONCAT (DISTINCT gt.genre_name)) - LENGTH (
-                REPLACE (GROUP_CONCAT (DISTINCT gt.genre_name), ',', '')
-            ) AS genre_count
+            -- 1 + LENGTH (GROUP_CONCAT (DISTINCT gt.genre_name)) - LENGTH (
+            --     REPLACE (GROUP_CONCAT (DISTINCT gt.genre_name), ',', '')
+            -- ) AS genre_count
+            1 + LENGTH (GROUP_CONCAT (gt.genre_name)) - LENGTH (GROUP_CONCAT (gt.genre_name, '')) AS genre_count
         FROM
             titles AS t
             LEFT JOIN crew AS c ON t.title_id = c.title_id
@@ -14,13 +17,14 @@ WITH
         GROUP BY
             p.name
         HAVING
-            genre_count > 10
+            genre_count > 100
     )
 SELECT
     t2.title,
     t2.premiered,
     r2.rating,
-    GROUP_CONCAT (DISTINCT gt2.genre_name),
+    -- GROUP_CONCAT (DISTINCT gt2.genre_name),
+    GROUP_CONCAT (gt2.genre_name),
     COUNT(DISTINCT actor) AS actors_count,
     GROUP_CONCAT (DISTINCT actor)
 FROM
