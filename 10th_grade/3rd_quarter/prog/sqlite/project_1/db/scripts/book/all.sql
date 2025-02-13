@@ -3,6 +3,7 @@ SELECT
     author,
     year,
     edition,
-    case,
+    locker,
     shelf
-FROM books;
+FROM
+    books;

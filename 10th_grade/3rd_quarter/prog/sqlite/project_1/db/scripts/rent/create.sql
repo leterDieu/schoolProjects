@@ -1,4 +1,4 @@
 INSERT INTO
-    rent (user_id, book_id)
+    rents (user_id, book_id)
 VALUES
     (?, ?);

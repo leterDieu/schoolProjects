@@ -1,6 +1,6 @@
 SELECT
     book_id,
-    case,
+    locker,
     shelf
 FROM
     books

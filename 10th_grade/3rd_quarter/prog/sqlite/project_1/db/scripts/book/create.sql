@@ -1,8 +1,4 @@
-INSERT INTO books (
-    name,
-    author,
-    year,
-    edition,
-    case,
-    shelf
-) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO
+    books (name, author, year, edition, locker, shelf)
+VALUES
+    (?, ?, ?, ?, ?, ?);

@@ -1,6 +1,6 @@
 SELECT
     book_id
 FROM
-    rent
+    rents
 WHERE
     user_id = ?;

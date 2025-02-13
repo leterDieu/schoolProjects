@@ -2,4 +2,4 @@ SELECT
     user_id,
     book_id
 FROM
-    rent;
+    rents;

@@ -1,3 +1,3 @@
-DELETE FROM rent
+DELETE FROM rents
 WHERE
     rent_id = ?;
