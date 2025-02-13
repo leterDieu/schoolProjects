@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS books (
     book_id INTEGER PRIMARY KEY,
     name VARCHAR(1024) NOT NULL,
-    author VARCHAR(1024) NOT NULL,
+    author VARCHAR(1024),
     year INTEGER,
     edition VARCHAR(1024) NOT NULL,
     locker INTEGER,

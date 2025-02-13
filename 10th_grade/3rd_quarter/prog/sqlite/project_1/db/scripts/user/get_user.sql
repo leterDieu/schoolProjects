@@ -5,4 +5,4 @@ FROM
     users
 WHERE
     (name LIKE '%' || ? || '%')
-    OR (lastname LIKE '%' || ? || '%');
+    AND (lastname LIKE '%' || ? || '%');

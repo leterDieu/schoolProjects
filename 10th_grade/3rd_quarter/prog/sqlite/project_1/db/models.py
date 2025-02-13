@@ -1,5 +1,4 @@
 import sqlite3
-
 from db.utils import get_script_from_file
 
 
@@ -32,12 +31,14 @@ class Book:
         def get_info(self, book_id: int) -> list[tuple[str, str, int, str]]:
             return self._template_query("get_info.sql", book_id)
 
+        def get_owner_info(self, book_id: int) -> list[tuple[int, str, str]]:
+            return self._template_query('get_owner_info.sql', book_id)
 
     conn: sqlite3.Connection
     objects: BookObjects
 
-    def __init__(self, db_path: str) -> None:
-        self.conn = sqlite3.connect(db_path)
+    def __init__(self, conn: sqlite3.Connection) -> None:
+        self.conn = conn
         cursor = self.conn.cursor()
         cursor.executescript(get_script_from_file("db_init.sql"))
         self.conn.commit()
@@ -72,11 +73,14 @@ class User:
         def get_info(self, user_id: int) -> list[tuple[str, str, str, int]]:
             return self._template_query("get_info.sql", user_id)
 
+        def get_books_info(self, user_id: int) -> list[tuple[int, str, str]]:
+            return self._template_query('get_books_info.sql', user_id)
+
     conn: sqlite3.Connection
     objects: UserObjects
 
-    def __init__(self, db_path: str) -> None:
-        self.conn = sqlite3.connect(db_path)
+    def __init__(self, conn: sqlite3.Connection) -> None:
+        self.conn = conn
         cursor = self.conn.cursor()
         cursor.executescript(get_script_from_file("db_init.sql"))
         self.conn.commit()
@@ -114,8 +118,8 @@ class Rent:
     conn: sqlite3.Connection
     objects: RentObjects
 
-    def __init__(self, db_path: str) -> None:
-        self.conn = sqlite3.connect(db_path)
+    def __init__(self, conn: sqlite3.Connection) -> None:
+        self.conn = conn
         cursor = self.conn.cursor()
         cursor.executescript(get_script_from_file("db_init.sql"))
         self.conn.commit()
