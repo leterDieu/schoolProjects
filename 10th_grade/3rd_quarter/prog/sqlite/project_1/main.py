@@ -1,13 +1,23 @@
+'''
+main module
+'''
+
 import argparse
 from tabulate import tabulate
-from db.models import *
+from db.models import Book, User, Rent, sqlite3
 
 
 def custom_print(info: list[tuple]) -> None:
+    '''
+    custom print with tabulate
+    '''
     print(tabulate(info))
 
 
-def main():
+def main() -> None:
+    '''
+    main func
+    '''
     db_path = "./database.db"
     conn = sqlite3.connect(db_path)
     book_table = Book(conn)
@@ -90,45 +100,45 @@ def main():
     args = parser.parse_args()
 
     # books
-    if args.all_books != None:
+    if args.all_books is not None:
         custom_print(book_table.objects.all())
-    if args.new_book != None:
+    if args.new_book is not None:
         book_table.objects.create(*args.new_book)
-    if args.remove_book != None:
+    if args.remove_book is not None:
         book_table.objects.delete(*args.remove_book)
-    if args.get_book != None:
+    if args.get_book is not None:
         custom_print(book_table.objects.get_book(*args.get_book))
-    if args.get_book_info != None:
+    if args.get_book_info is not None:
         custom_print(book_table.objects.get_info(*args.get_book_info))
 
     # users
-    if args.all_users != None:
+    if args.all_users is not None:
         custom_print(user_table.objects.all())
-    if args.new_user != None:
+    if args.new_user is not None:
         user_table.objects.create(*args.new_user)
-    if args.remove_user != None:
+    if args.remove_user is not None:
         user_table.objects.delete(*args.remove_user)
-    if args.get_user != None:
+    if args.get_user is not None:
         custom_print(user_table.objects.get_user(*args.get_user))
-    if args.get_user_info != None:
+    if args.get_user_info is not None:
         custom_print(user_table.objects.get_info(*args.get_user_info))
 
     # rents
-    if args.all_rents != None:
+    if args.all_rents is not None:
         custom_print(rent_table.objects.all())
-    if args.new_rent != None:
+    if args.new_rent is not None:
         rent_table.objects.create(*args.new_rent)
-    if args.remove_rent != None:
+    if args.remove_rent is not None:
         rent_table.objects.delete(*args.remove_rent)
-    if args.get_rent_book != None:
+    if args.get_rent_book is not None:
         custom_print(rent_table.objects.get_book(*args.get_rent_book))
-    if args.get_rent_user != None:
+    if args.get_rent_user is not None:
         custom_print(rent_table.objects.get_user(*args.get_rent_user))
 
     # relations
-    if args.get_owner_info != None:
+    if args.get_owner_info is not None:
         custom_print(book_table.objects.get_owner_info(*args.get_owner_info))
-    if args.get_books_info != None:
+    if args.get_books_info is not None:
         custom_print(user_table.objects.get_books_info(*args.get_books_info))
 
 
