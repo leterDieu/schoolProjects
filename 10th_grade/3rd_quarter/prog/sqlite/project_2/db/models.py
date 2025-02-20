@@ -85,7 +85,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(255), nullable=False, unique=True)
     status = Column(Boolean, default=False)
-    project_id = Column(Integer, ForeignKey('projects.id'), unique=True)
+    project_id = Column(Integer, ForeignKey('projects.id'))
     project = relationship('Project', backref='task', uselist=False)
 
     def __str__(self) -> str:
@@ -93,4 +93,5 @@ class Task(Base):
 
     def __repr__(self) -> str:
         return str((self.id, self.title, self.status, self.project_id))
+
 Base.metadata.create_all(engine)

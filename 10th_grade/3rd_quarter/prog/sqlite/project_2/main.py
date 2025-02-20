@@ -4,6 +4,7 @@ Main
 
 from typing import Any
 import argparse
+from tabulate import tabulate
 from sqlalchemy.orm import Query
 from db.models import (
     User,
@@ -53,6 +54,14 @@ def main() -> None:
                         metavar = ('user id'),
                         help = "Gets profile's id.")
 
+    parser.add_argument("-cuu", "--change-user-username", type = str, nargs = 2,
+                        metavar = ('user id', 'new username'),
+                        help = "Changes user's username.")
+
+    parser.add_argument("-cue", "--change-user-email", type = str, nargs = 2,
+                        metavar = ('user id', 'new email'),
+                        help = "Changes user's email.")
+
     # profiles (f)
     parser.add_argument("-af", "--all-profiles", nargs = '*',
                         help = "Shows all profiles.")
@@ -67,7 +76,7 @@ def main() -> None:
 
     parser.add_argument("-gf", "--get-profile", type = str, nargs = 1,
                         metavar = ('phone'),
-                        help = "Gets profile by phone")
+                        help = "Gets profile by phone.")
 
     parser.add_argument("-gfi", "--get-profile-info", type = str, nargs = 1,
                         metavar = 'profile id',
@@ -76,6 +85,14 @@ def main() -> None:
     parser.add_argument("-gfu", "--get-profile-user", type = str, nargs = 1,
                         metavar = ('profile id'),
                         help = "Gets user's id.")
+
+    parser.add_argument("-cfb", "--change-profile-bio", type = str, nargs = 2,
+                        metavar = ('profile id', 'new bio'),
+                        help = "Changes profile's bio.")
+
+    parser.add_argument("-cfp", "--change-profile-phone", type = str, nargs = 2,
+                        metavar = ('profile id', 'new phone'),
+                        help = "Changes profile's phone.")
 
     # projects (p)
     parser.add_argument("-ap", "--all-projects", nargs = '*',
@@ -96,6 +113,14 @@ def main() -> None:
     parser.add_argument("-gpi", "--get-project-info", type = str, nargs = 1,
                         metavar = 'project id',
                         help = "Gets project's info.")
+
+    parser.add_argument("-cpt", "--change-project-title", type = str, nargs = 2,
+                        metavar = ('project id', 'new title'),
+                        help = "Changes project's title.")
+
+    parser.add_argument("-cpd", "--change-project-description", type = str, nargs = 2,
+                        metavar = ('project id', 'new description'),
+                        help = "Changes project's description.")
 
     # tasks (s)
     parser.add_argument("-at", "--all-tasks", nargs = '*',
@@ -123,6 +148,18 @@ def main() -> None:
     parser.add_argument("-gct", "--get-complete-tasks", type = str, nargs = '*',
                         help = "Gets complete tasks.")
 
+    parser.add_argument("-ct", "--complete-task", type = str, nargs = 1,
+                        metavar='task id',
+                        help = "Sets task's status as complete.")
+
+    parser.add_argument("-ctt", "--change-task-title", type = str, nargs = 2,
+                        metavar = ('task id', 'new title'),
+                        help = "Changes task's title.")
+
+    # sync (s)
+    parser.add_argument("-sup", "--sync-user-project", type = str, nargs = 2,
+                        metavar = ('user id', 'project id'),
+                        help = "Syncs user to project.")
 
     args = parser.parse_args()
 
@@ -143,6 +180,14 @@ def main() -> None:
         custom_print(session.query(User).filter_by(id=args.get_user_info[0]))
     if args.get_user_profile is not None:
         custom_print(session.query(Profile).filter_by(user_id=args.get_user_profile[0]))
+    if args.change_user_username is not None:
+        user = session.query(User).filter_by(id=args.change_user_username[0]).first()
+        if user is not None:
+            user.username = args.change_user_username[1]
+    if args.change_user_email is not None:
+        user = session.query(User).filter_by(id=args.change_user_email[0]).first()
+        if user is not None:
+            user.email = args.change_user_email[1]
 
     # profiles
     if args.all_profiles is not None:
@@ -164,6 +209,14 @@ def main() -> None:
         profile = session.query(Profile).filter_by(id=args.get_profile_user[0]).first()
         if profile is not None:
             print(profile.user)
+    if args.change_profile_bio is not None:
+        profile = session.query(Profile).filter_by(id=args.change_profile_bio[0]).first()
+        if profile is not None:
+            profile.bio = args.change_profile_bio[1]
+    if args.change_profile_phone is not None:
+        profile = session.query(Profile).filter_by(id=args.change_profile_phone[0]).first()
+        if profile is not None:
+            profile.phone = args.change_profile_phone[1]
 
     # projects
     if args.all_projects is not None:
@@ -180,6 +233,14 @@ def main() -> None:
         custom_print(session.query(Project).filter_by(title=args.get_project[0]))
     if args.get_project_info is not None:
         custom_print(session.query(Project).filter_by(id=args.get_project_info[0]))
+    if args.change_project_title is not None:
+        project = session.query(Project).filter_by(id=args.change_project_title[0]).first()
+        if project is not None:
+            project.title = args.change_project_title[1]
+    if args.change_project_description is not None:
+        project = session.query(Project).filter_by(id=args.change_project_description[0]).first()
+        if project is not None:
+            project.description = args.change_project_description[1]
 
     # tasks
     if args.all_tasks is not None:
@@ -200,6 +261,22 @@ def main() -> None:
         custom_print(session.query(Task).filter_by(status=False))
     if args.get_complete_tasks is not None:
         custom_print(session.query(Task).filter_by(status=True))
+    if args.complete_task is not None:
+        task = session.query(Task).filter_by(id=args.complete_task[0]).first()
+        if task is not None:
+            task.status = True
+    if args.change_task_title is not None:
+        task = session.query(Task).filter_by(id=args.change_task_title[0]).first()
+        if task is not None:
+            task.title = args.change_task_title[1]
+
+    # sync
+    if args.sync_user_project is not None:
+        user = session.query(User).filter_by(id=args.sync_user_project[0]).first()
+        project = session.query(Project).filter_by(id=args.sync_user_project[1]).first()
+        if project is not None and user is not None:
+            project.users.append(user)
+
 
     session.commit()
 
