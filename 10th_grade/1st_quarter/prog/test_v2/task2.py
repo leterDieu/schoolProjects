@@ -1,7 +1,6 @@
 import math
 import json
 
-
 logs_list = [math.ceil(math.log(i, 3)) for i in range(1, 2000010)]
 sums_list = [0]
 for elem in logs_list:
